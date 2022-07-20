@@ -27,7 +27,7 @@ function ChangeView({ center, zoom }) {
 }
 
 function App() {
-  const [positions, setPositions] = React.useState([0,0]);
+  const [positions, setPositions] = React.useState([-14.4086569,-51.31668]);
   const [data, setData] = React.useState([]);
 
   let a = false
@@ -60,8 +60,8 @@ function App() {
     <div className="App">
 
       <div className='container'>
-        <MapContainer center={positions} zoom={1}>
-        <ChangeView center={positions} zoom={14} />
+        <MapContainer center={positions} zoom={3}>
+        <ChangeView center={positions} zoom={5} />
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
