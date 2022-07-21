@@ -30,7 +30,6 @@ function ChangeView({ center, zoom }) {
 
 function App() {
   const [positions, setPositions] = React.useState([-14.4086569,-51.31668]);
-  const [newData, setNewData] = React.useState([]);
   const [data, setData] = React.useState([]);
 
   let a = false
@@ -49,7 +48,7 @@ function App() {
       if(a){
         socket.on("locations", (info) => {
           console.log('New location: ', info)
-          setNewData((prevState) => [...prevState, info])
+          setData((prevState) => [...prevState, info])
           setPositions([info.locationInformation.latitude, info.locationInformation.longitude])
         })
       }
@@ -64,8 +63,7 @@ function App() {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
           />
-          {!newData.length && data.length  && renderMarkers(data)}
-          {newData.length && renderMarkers(newData)}
+          {data.length && renderMarkers(data)}
         </MapContainer>
     </div>
   )
