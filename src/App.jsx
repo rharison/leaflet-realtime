@@ -1,5 +1,6 @@
 
 
+
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import socketIOClient from "socket.io-client";
@@ -10,13 +11,14 @@ const socket = socketIOClient(endpoint);
 let a = 0;
 
 function renderMarkers(data) {
- return (
-  <Marker position={[data.locationInformation.latitude, data.locationInformation.longitude]}>
+ const locations =  data.map((info) => (
+  <Marker position={[info.locationInformation.latitude, info.locationInformation.longitude]}>
     <Popup>
-        {data.mainName}
+        {info.mainName}
     </Popup>
   </Marker>
- )
+ ))
+  return locations
 }
 
 function ChangeView({ center, zoom }) {
@@ -28,6 +30,7 @@ function ChangeView({ center, zoom }) {
 
 function App() {
   const [positions, setPositions] = React.useState([-14.4086569,-51.31668]);
+  const [newData, setNewData] = React.useState([]);
   const [data, setData] = React.useState([]);
 
   let a = false
@@ -46,10 +49,7 @@ function App() {
       if(a){
         socket.on("locations", (info) => {
           console.log('New location: ', info)
-          setData(prevData => {
-            let test = [ ...prevData, info ]
-            return test
-          })
+          setNewData((prevState) => [...prevState, info])
           setPositions([info.locationInformation.latitude, info.locationInformation.longitude])
         })
       }
@@ -58,18 +58,15 @@ function App() {
   }, []);
   return (
     <div className="App">
-
-      <div className='container'>
-        <MapContainer center={positions} zoom={3}>
+        <MapContainer center={positions} zoom={3} preferCanvas={true} className=".container">
         <ChangeView center={positions} zoom={5} />
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
           />
-          {data.map(renderMarkers)}
+          {!newData.length && data.length  && renderMarkers(data)}
+          {newData.length && renderMarkers(newData)}
         </MapContainer>
-      </div>
-
     </div>
   )
 }

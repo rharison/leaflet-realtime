@@ -5,6 +5,7 @@
   "type": "module",
   "homepage": "https://rharison.github.io/leaflet-realtime",
   "scripts": {
+    "start": "nodemon src/index.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -12,7 +13,9 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1",
+    "express-es6-template-engine": "^2.2.3",
     "leaflet": "^1.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,6 +28,7 @@
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "gh-pages": "^4.0.0",
+    "nodemon": "^2.0.19",
     "vite": "^3.0.0"
   }
 }
