@@ -36,7 +36,7 @@ function App() {
   let a = false
   useEffect(() => {
       async function getData() {
-        const resonse = await fetch('http://144.22.132.41/locations')
+        const resonse = await fetch('http://144.22.132.41/http/locations')
         const data = await resonse.json()
 
         return data
