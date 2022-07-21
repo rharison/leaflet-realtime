@@ -6,8 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import socketIOClient from "socket.io-client";
 import './App.css'
 
-const endpoint = 'http://localhost:4444';
-const socket = socketIOClient(endpoint);
+const endpoint = 'http://144.22.132.41/';
+const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
 let a = 0;
 
 function renderMarkers(data) {
@@ -36,7 +36,7 @@ function App() {
   let a = false
   useEffect(() => {
       async function getData() {
-        const resonse = await fetch('http://localhost:3333/locations')
+        const resonse = await fetch('http://144.22.132.41/locations')
         const data = await resonse.json()
 
         return data
