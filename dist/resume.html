@@ -26,7 +26,7 @@
       console.log('New location: ', info)
       const body = document.querySelector('body')
       const title = document.createElement('h3')
-      title.innerHTML = `[${cont}] - ${info.mainName} - ${new Date().toISOString()}`
+      title.innerHTML = `[${cont}] - ${info.mainName} - ${new Date().toISOString()} - Total: ${info.total}`
       body.appendChild(title)
       })
   </script>
