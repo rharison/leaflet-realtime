@@ -21,6 +21,12 @@ app.get('/', async (req, res) => {
   //express.static(path.join(__dirname, '../dist'))
   res.render(path.join(__dirname, '../dist/index.html'))
 })
+
+app.get('/resume', async (req, res) => {
+  //express.static(path.join(__dirname, '../dist'))
+  res.render(path.join(__dirname, '../dist/resume.html'))
+})
+
 app.listen(PORT)
 
 console.log('Front server started in port ', PORT)
