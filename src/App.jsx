@@ -8,7 +8,6 @@ import './App.css'
 
 const endpoint = 'http://144.22.132.41/';
 const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
-let a = 0;
 
 function renderMarkers(data) {
  const locations =  data.map((info) => (
@@ -32,7 +31,7 @@ function App() {
   const [positions, setPositions] = React.useState([-14.4086569,-51.31668]);
   const [data, setData] = React.useState([]);
 
-  let a = false
+  let a = true
   useEffect(() => {
       async function getData() {
         const resonse = await fetch('http://144.22.132.41/http/locations')
@@ -46,6 +45,9 @@ function App() {
       })
 
       if(a){
+        socket.on('connect', (socket) => {
+          console.log('connected')
+        })
         socket.on("locations", (info) => {
           console.log('New location: ', info)
           setData((prevState) => [...prevState, info])
@@ -53,7 +55,7 @@ function App() {
         })
       }
 
-      a=true
+      a = false
   }, []);
   return (
     <div className="App">
