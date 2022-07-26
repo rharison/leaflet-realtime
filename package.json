@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "express-es6-template-engine": "^2.2.3",
@@ -22,7 +23,8 @@
     "react-leaflet": "^4.0.1",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
-    "vite-plugin-socket-io": "^1.0.2"
+    "vite-plugin-socket-io": "^1.0.2",
+    "react-leaflet-pixi-overlay": "^3.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.15",
