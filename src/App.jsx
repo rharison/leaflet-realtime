@@ -19,12 +19,12 @@ const exclude = ["chave", "hospital", "barbearia", "policia", "site", "marketing
   "senai", "bazar", "cabeleireiro", "system", "advogado", " cortes"
 ]
 
-const endpoint = 'http://144.22.132.41/';
+const endpoint = 'http://144.22.139.83/';
 const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
 
 function App() {
-  const [locations, setLocations] = useState()
-  const [locationsBkp, setLocationsBkp] = useState()
+  const [locations, setLocations] = useState([])
+  const [locationsBkp, setLocationsBkp] = useState([])
 
   const [position, setPosition] = useState([])
 
@@ -37,7 +37,7 @@ function App() {
   let oneRender = true;
 
   const getLocations = useCallback(async ()=>{
-    const locations = await axios.get('http://144.22.132.41/http/locations');
+    const locations = await axios.get('http://144.22.139.83/http/locations');
     let newLocations = locations.data;
 
     console.log('>>>ALL',newLocations.length)
