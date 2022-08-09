@@ -9,10 +9,11 @@
     }
     .infos {
       background-color: bisque;
-      padding: 10px;
       display: flex;
-
       justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
     .status-websocket.desconect {
       color: red;
@@ -41,13 +42,16 @@
     let cont = 0
     const endpoint = 'http://144.22.148.24/';
     const socket = io(endpoint, {path: "/socket/socket.io"});
-    async function teste(){
+
+    async function getTotal(){
       const locations = await axios.get('http://144.22.148.24//http/locations');
       let newLocations = locations.data;
       const elementTotal = document.querySelector('.total');
-      elementTotal.innerText = newLocations.length;
+      elementTotal.innerText = +elementTotal.innerText + newLocations.length;
     }
-    teste()
+
+    getTotal()
+
     socket.on('connect', (socket) => {
       const spanStatus = document.querySelector('.status-websocket');
       spanStatus.innerHTML = 'Conectado';
@@ -55,6 +59,7 @@
       spanStatus.classList.add('connected');
       console.log('WebSocket connected');
     })
+
     socket.on("locations", (info) => {
       cont++
       console.log('New location: ', info)
@@ -62,7 +67,9 @@
       const title = document.createElement('h3')
       title.innerHTML = `[${cont}] - ${info.mainName} - ${new Date().toISOString()}`
       body.appendChild(title)
-      })
+      const elementTotal = document.querySelector('.total');
+      elementTotal.innerText = +elementTotal.innerText++
+    })
   </script>
 </body>
 </html>
