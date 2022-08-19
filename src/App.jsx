@@ -8,19 +8,9 @@ import { RemoveAccentsString } from './util/string'
 
 import './App.css'
 
-const exclude = ["chave", "hospital", "barbearia", "policia", "site", "marketing",
-  "agencia", "publicidade", "decoracao", "grafica", "vidracaria", "creche", "assembleia",
-  "associacao", "atelie", " eletrica ", "banco", "bercario", "mecanica", "mercearia",
-  "puteiro", "cvc", "cabelereiro", "viagens", "veterinaria", "condominio", "residencial",
-  "construtora", "ads", "detran", "sanitaria", "vigilancia", "equipe", "oracao",
-  "congregacao", "jr ", " jr", "petshop", "pet shop", "estetica", "boutique", "atacado",
-  "varejo", "acessorios", "clinica", "imoveis", "software", "contabilidade", "padaria",
-  "lanchonete", "supermercado", "farmacia", "posto", "puc-", "restaurante", "secretaria",
-  "senai", "bazar", "cabeleireiro", "system", "advogado", " cortes"
-]
-
-const endpoint = 'http://144.22.139.83/';
-const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
+const endpoint = 'http://localhost:4444/';
+// const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
+const socket = socketIOClient(endpoint);
 
 function App() {
   const [locations, setLocations] = useState([])
@@ -28,22 +18,12 @@ function App() {
 
   const [position, setPosition] = useState([])
 
-  const filterLocations = useCallback((locations) => {
-    let newLocations = locations.filter(location=> location.locationInformation);
-    newLocations = newLocations.filter(loc=> !exclude.some(ex=> RemoveAccentsString(loc.mainName).toLowerCase().includes(ex)))
-    return newLocations
-  },[])
-
   let oneRender = true;
 
   const getLocations = useCallback(async ()=>{
-    const locations = await axios.get('http://144.22.139.83/http/locations');
-    let newLocations = locations.data;
-
-    console.log('>>>ALL',newLocations.length)
-    newLocations = filterLocations(newLocations)
-
-    console.log('>>>FILTERED',newLocations.length)
+    const locations = await axios.get('http://localhost:3333/locations');
+    const newLocations = locations.data;
+    console.log('>>>Total Places: ',newLocations.length)
 
     setLocations(newLocations)
     setLocationsBkp(newLocations)
