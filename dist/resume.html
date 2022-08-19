@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    .infos {
+      background-color: bisque;
+      display: flex;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    .status-websocket.desconect {
+      color: red;
+    }
+    .status-websocket.connected {
+      color: green;
+    }
+  </style>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +30,36 @@
   integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
   crossorigin="anonymous"
   ></script>
-  <title>Resume</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Resume - Scrawping 2000</title>
 </head>
 <body>
-
+  <div class="infos">
+    <span>Status WebSocket: <span class="status-websocket desconect">Desconectado</span></span>
+    <span>Total de locais coletados: <span class="total">0</span></span>
+  </div>
   <script>
-  let cont = 0
-  console.log('oi')
-    const endpoint = 'http://144.22.132.41/';
+    let cont = 0
+    const endpoint = 'http://144.22.148.24/';
     const socket = io(endpoint, {path: "/socket/socket.io"});
+
+    async function getTotal(){
+      const locations = await axios.get('http://144.22.148.24//http/locations');
+      let newLocations = locations.data;
+      const elementTotal = document.querySelector('.total');
+      elementTotal.innerText = +elementTotal.innerText + newLocations.length;
+    }
+
+    getTotal()
+
     socket.on('connect', (socket) => {
+      const spanStatus = document.querySelector('.status-websocket');
+      spanStatus.innerHTML = 'Conectado';
+      spanStatus.classList.remove('desconect');
+      spanStatus.classList.add('connected');
       console.log('WebSocket connected');
     })
+
     socket.on("locations", (info) => {
       cont++
       console.log('New location: ', info)
@@ -28,7 +67,9 @@
       const title = document.createElement('h3')
       title.innerHTML = `[${cont}] - ${info.mainName} - ${new Date().toISOString()}`
       body.appendChild(title)
-      })
+      const elementTotal = document.querySelector('.total');
+      elementTotal.innerText = +elementTotal.innerText++
+    })
   </script>
 </body>
 </html>
