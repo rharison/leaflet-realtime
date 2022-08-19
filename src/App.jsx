@@ -45,7 +45,7 @@ function App() {
       })
 
       socket.on("locations", (info) => {
-        console.log('New location: ', locationFilter)
+        console.log('>>>New Location: ', info)
         setLocationsBkp(prev=> [...prev, info])
         setLocations(prev=> [...prev, info])
         setPosition([info.locationInformation.latitude, info.locationInformation.longitude])
