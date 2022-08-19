@@ -8,7 +8,7 @@ import { RemoveAccentsString } from './util/string'
 
 import './App.css'
 
-const endpoint = 'http://localhost:4444/';
+const endpoint = 'http://192.168.1.102:4444/';
 // const socket = socketIOClient(endpoint, {path: "/socket/socket.io"});
 const socket = socketIOClient(endpoint);
 
@@ -21,7 +21,7 @@ function App() {
   let oneRender = true;
 
   const getLocations = useCallback(async ()=>{
-    const locations = await axios.get('http://localhost:3333/locations');
+    const locations = await axios.get('http://192.168.1.102:3333/locations');
     const newLocations = locations.data;
     console.log('>>>Total Places: ',newLocations.length)
 
