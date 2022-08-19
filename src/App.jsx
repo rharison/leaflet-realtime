@@ -43,19 +43,14 @@ function App() {
       socket.on('connect', (socket) => {
         console.log('connected')
       })
+
       socket.on("locations", (info) => {
-
-        const [locationFilter] = filterLocations([info])
-
-        if(locationFilter){
-          console.log('New location: ', locationFilter)
-          setLocationsBkp(prev=> [...prev, locationFilter])
-          setLocations(prev=> [...prev, locationFilter])
-          setPosition([locationFilter.locationInformation.latitude, locationFilter.locationInformation.longitude])
-        } else {
-          console.log('Remove: ', info)
-        }
+        console.log('New location: ', locationFilter)
+        setLocationsBkp(prev=> [...prev, info])
+        setLocations(prev=> [...prev, info])
+        setPosition([info.locationInformation.latitude, info.locationInformation.longitude])
       })
+
     }
   },[])
 
